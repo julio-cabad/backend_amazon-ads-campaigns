@@ -1,0 +1,11 @@
+# Production requirements
+-r base.txt
+
+# WSGI Server
+gunicorn>=22.0.0
+
+# PostgreSQL (optional - for production)
+psycopg2-binary>=2.9.0
+
+# Monitoring
+sentry-sdk>=2.0.0

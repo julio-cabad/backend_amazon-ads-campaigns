@@ -1,0 +1,21 @@
+# Base requirements - common to all environments
+django>=5.0,<6.0
+djangorestframework>=3.15.0
+django-filter>=24.0
+drf-spectacular>=0.27.0
+
+# Celery & Redis
+celery>=5.4.0
+redis>=5.0.0
+django-celery-beat>=2.6.0
+django-celery-results>=2.5.0
+
+# Configuration
+python-decouple>=3.8
+dj-database-url>=2.1.0
+
+# Utilities
+structlog>=24.0.0
+whitenoise>=6.6.0
+tenacity>=8.2.0
+psycopg2-binary
