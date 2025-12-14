@@ -5,7 +5,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: docker/Dockerfile.dev
+      dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -35,7 +35,7 @@ services:
   celery_worker:
     build:
       context: .
-      dockerfile: docker/Dockerfile.dev
+      dockerfile: Dockerfile
     command: celery -A config worker -l info
     volumes:
       - .:/app
@@ -51,7 +51,7 @@ services:
   celery_beat:
     build:
       context: .
-      dockerfile: docker/Dockerfile.dev
+      dockerfile: Dockerfile
     command: celery -A config beat -l info
     volumes:
       - .:/app
