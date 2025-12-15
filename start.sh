@@ -9,11 +9,11 @@ python manage.py migrate --noinput
 
 # Start Celery Worker in background (optional - may fail if no Redis)
 echo "Starting Celery Worker..."
-celery -A config worker -l info --detach || echo "WARNING: Celery Worker failed to start (Redis may not be configured)"
+celery -A config worker -l info &
 
 # Start Celery Beat in background (optional - may fail if no Redis)
 echo "Starting Celery Beat..."
-celery -A config beat -l info --detach || echo "WARNING: Celery Beat failed to start (Redis may not be configured)"
+celery -A config beat -l info &
 
 # Start Gunicorn (Foreground process to keep container alive)
 echo "Starting Gunicorn..."
