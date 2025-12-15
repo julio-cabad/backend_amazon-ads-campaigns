@@ -43,10 +43,7 @@ if os.environ.get('SENTRY_DSN'):
 # Ensure proper logging in production
 LOGGING['handlers']['console']['formatter'] = 'verbose'  # noqa: F405
 
-# --- EMERGENCY CORS FIX ---
-# Force CORS settings in production to avoid inheritance issues
-if 'corsheaders' not in INSTALLED_APPS:
-    INSTALLED_APPS += ['corsheaders']
+# CORS is now properly configured in base.py (corsheaders in THIRD_PARTY_APPS)
 
 # Redefine middleware to ensure CORS is at the top
 MIDDLEWARE = [
