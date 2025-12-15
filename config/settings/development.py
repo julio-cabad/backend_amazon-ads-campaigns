@@ -16,6 +16,9 @@ ALLOWED_HOSTS = ['*']
 # INSTALLED_APPS += ['debug_toolbar']  # noqa: F405
 # MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa: F405
 
+# Add corsheaders (moved from base.py to avoid duplication in prod)
+INSTALLED_APPS += ['corsheaders']
+
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 # Debug toolbar settings

@@ -77,3 +77,7 @@ INSTALLED_APPS.append('corsheaders')
  
 
 
+# DEBUG: Print final apps list
+import sys
+sys.stderr.write(f"DEBUG: INSTALLED_APPS={INSTALLED_APPS}\n")
+
