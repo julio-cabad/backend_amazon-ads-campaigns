@@ -15,6 +15,9 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# Allow all hosts to avoid 502/400 errors on Railway
+ALLOWED_HOSTS = ['*']
+
 # HTTPS settings (enable when using HTTPS)
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True

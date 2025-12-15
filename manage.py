@@ -15,15 +15,6 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    try:
-        from django.conf import settings
-        # Force settings load to debug
-        # if 'DJANGO_SETTINGS_MODULE' not in os.environ:
-        #    print("WARNING: DJANGO_SETTINGS_MODULE not set in manage.py")
-        
-    except ImportError:
-        pass
-        
     execute_from_command_line(sys.argv)
 
 
