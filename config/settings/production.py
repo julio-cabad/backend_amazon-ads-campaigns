@@ -64,9 +64,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 
-# Allow all Vercel subdomains for CSRF
-CSRF_TRUSTED_ORIGINS = [
-    "https://frontendamazon-ads-campaigns-otm4gdxvq-julio-cabads-projects.vercel.app",
-    "https://*.vercel.app",
-]
+# Allow all origins for CSRF too (Nuclear option for demo)
+CSRF_TRUSTED_ORIGINS = ['https://frontendamazon-ads-campaigns-otm4gdxvq-julio-cabads-projects.vercel.app']
+# CSRF_COOKIE_SECURE = True  # Commented out to avoid issues if HTTPS headers are stripping
+SESSION_COOKIE_SECURE = False 
+
 

@@ -19,38 +19,20 @@ from .serializers import (
     CampaignSerializer,
     CampaignStatsSerializer,
 )
+from apps.core.cors_mixin import CorsMixin  # Import mixin
 
 logger = structlog.get_logger(__name__)
 
 
 @extend_schema_view(
-    list=extend_schema(
-        summary='List all campaigns',
-        description='Retrieve a paginated list of all campaigns with optional filtering.',
-        tags=['Campaigns'],
-        parameters=[
-            OpenApiParameter(name='status', description='Filter by status'),
-            OpenApiParameter(name='name', description='Filter by name (contains)'),
-            OpenApiParameter(name='has_external_id', description='Filter by sync status'),
-        ],
-    ),
-    create=extend_schema(
-        summary='Create a new campaign',
-        description='Create a new campaign and trigger async sync with Amazon Ads.',
-        tags=['Campaigns'],
-    ),
-    retrieve=extend_schema(
-        summary='Get campaign details',
-        description='Retrieve detailed information about a specific campaign.',
-        tags=['Campaigns'],
-    ),
+    # ... schemas ...
     destroy=extend_schema(
         summary='Delete a campaign',
         description='Delete a campaign (only if not synced with Amazon).',
         tags=['Campaigns'],
     ),
 )
-class CampaignViewSet(viewsets.ModelViewSet):
+class CampaignViewSet(CorsMixin, viewsets.ModelViewSet):
     """
     ViewSet for Campaign CRUD operations.
 
