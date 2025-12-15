@@ -44,6 +44,16 @@ backend/
 
 ---
 
+## 🌐 Demo en Vivo
+
+El backend está desplegado y funcionando en Railway:
+
+*   **API Base**: [https://backendamazon-ads-campaigns-production.up.railway.app/](https://backendamazon-ads-campaigns-production.up.railway.app/)
+*   **Documentación Swagger**: [https://backendamazon-ads-campaigns-production.up.railway.app/api/docs/](https://backendamazon-ads-campaigns-production.up.railway.app/api/docs/)
+*   **Health Check**: [https://backendamazon-ads-campaigns-production.up.railway.app/api/health/](https://backendamazon-ads-campaigns-production.up.railway.app/api/health/)
+
+---
+
 ## 🚀 Guía de Inicio Rápido
 
 ### 1. Clonar y Configurar
@@ -135,6 +145,23 @@ Esto levantará:
 - Redis
 - Celery Worker
 - Celery Beat
+
+---
+
+## ☁️ Despliegue en Producción (Railway)
+
+Este proyecto está optimizado para desplegarse fácilmente en [Railway](https://railway.app/).
+
+1.  **Fork/Clone** este repositorio.
+2.  Crea un nuevo proyecto en Railway desde GitHub.
+3.  Añade una base de datos **PostgreSQL** y un servicio **Redis** desde el panel de Railway.
+4.  Configura las siguientes **Variables de Entorno** en tu servicio Backend:
+    *   `DATABASE_URL`: (La URL de conexión de Postgres)
+    *   `REDIS_URL`: (La URL de conexión de Redis)
+    *   `DJANGO_SETTINGS_MODULE`: `config.settings.production`
+    *   `SECRET_KEY`: (Crea una clave segura)
+    *   `ALLOWED_HOSTS`: `*` (o tu dominio real)
+5.  Railway detectará automáticamente el `Dockerfile` en la raíz y desplegará el servicio.
 
 ---
 

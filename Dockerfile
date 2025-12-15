@@ -16,7 +16,6 @@ RUN apt-get update \
 
 # Install python dependencies
 COPY requirements/ requirements/
-# Create a root requirements.txt for compatibility if needed, but we install directly
 RUN pip install --no-cache-dir -r requirements/production.txt
 
 # Copy project
@@ -25,10 +24,12 @@ COPY . .
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Create a non-root user and switch to it for security
+# Perform chmod on start script
+RUN chmod +x /app/start.sh
+
+# Create a non-root user
 RUN addgroup --system app && adduser --system --group app
 USER app
 
-# Run gunicorn
-# Use specific port passed via env or default to 8000
-CMD gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}
+# Run the start script
+CMD ["/app/start.sh"]
