@@ -49,6 +49,7 @@ INSTALLED_APPS += ['corsheaders']  # noqa: F405
 
 # Redefine middleware to ensure CORS is at the top
 MIDDLEWARE = [
+    'apps.core.middleware.ForceCorsMiddleware', # NUCLEAR OPTION
     'corsheaders.middleware.CorsMiddleware',  # MUST BE FIRST
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
