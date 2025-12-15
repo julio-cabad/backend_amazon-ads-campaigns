@@ -42,3 +42,31 @@ if os.environ.get('SENTRY_DSN'):
 
 # Ensure proper logging in production
 LOGGING['handlers']['console']['formatter'] = 'verbose'  # noqa: F405
+
+# --- EMERGENCY CORS FIX ---
+# Force CORS settings in production to avoid inheritance issues
+INSTALLED_APPS += ['corsheaders']  # noqa: F405
+
+# Redefine middleware to ensure CORS is at the top
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # MUST BE FIRST
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
+
+# Allow all Vercel subdomains for CSRF
+CSRF_TRUSTED_ORIGINS = [
+    "https://frontendamazon-ads-campaigns-otm4gdxvq-julio-cabads-projects.vercel.app",
+    "https://*.vercel.app",
+]
+
