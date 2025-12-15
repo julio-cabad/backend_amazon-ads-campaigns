@@ -69,6 +69,10 @@ CORS_ALLOW_HEADERS = ['*']
 # Allow all origins for CSRF too (Nuclear option for demo)
 CSRF_TRUSTED_ORIGINS = ['https://frontendamazon-ads-campaigns-otm4gdxvq-julio-cabads-projects.vercel.app']
 # CSRF_COOKIE_SECURE = True  # Commented out to avoid issues if HTTPS headers are stripping
-SESSION_COOKIE_SECURE = False 
+
+# FINAL SAFETY CHECK: Deduplicate INSTALLED_APPS one last time
+# This is "Nuclear Option" to fix "Application labels aren't unique" error
+INSTALLED_APPS = list(dict.fromkeys(INSTALLED_APPS))
+ 
 
 
