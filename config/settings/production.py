@@ -45,7 +45,7 @@ LOGGING['handlers']['console']['formatter'] = 'verbose'  # noqa: F405
 
 # --- EMERGENCY CORS FIX ---
 # Force CORS settings in production to avoid inheritance issues
-# (Duplicate removed) INSTALLED_APPS += ['corsheaders']
+INSTALLED_APPS += ['corsheaders']
 
 # Redefine middleware to ensure CORS is at the top
 MIDDLEWARE = [
