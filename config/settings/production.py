@@ -72,7 +72,8 @@ CSRF_TRUSTED_ORIGINS = ['https://frontendamazon-ads-campaigns-otm4gdxvq-julio-ca
 
 # FINAL SAFETY CHECK: Deduplicate INSTALLED_APPS one last time
 # This is "Nuclear Option" to fix "Application labels aren't unique" error
-INSTALLED_APPS = list(dict.fromkeys(INSTALLED_APPS))
+INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'corsheaders']
+INSTALLED_APPS.append('corsheaders')
  
 
 
