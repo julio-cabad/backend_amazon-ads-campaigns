@@ -75,17 +75,24 @@ class CampaignViewSet(CorsMixin, viewsets.ModelViewSet):
         This replaces the need for Celery Beat in low-memory environments.
         """
         try:
+            import sys
+            sys.stderr.write("DEBUG: LAZY SYNC START\n")
             # Sync pending statuses on-demand (Lazy Sync)
             # 1. Update status for PROCESSING campaigns
+            sys.stderr.write("DEBUG: Calling sync_all_campaign_statuses.delay()\n")
             sync_all_campaign_statuses.delay()
             
             # 2. Retry initial sync for stuck PENDING campaigns (Self-healing)
             # This ensures campaigns that missed the initial task get processed
             pending_campaigns = CampaignService.get_pending_campaigns()
+            sys.stderr.write(f"DEBUG: Pending campaigns count: {len(pending_campaigns)}\n")
+            
             for campaign in pending_campaigns:
+                sys.stderr.write(f"DEBUG: Syncing Pending Campaign: {campaign.id}\n")
                 sync_campaign_with_amazon.delay(str(campaign.id))
                 
         except Exception as e:
+            sys.stderr.write(f"DEBUG: LAZY SYNC ERROR: {e}\n")
             logger.error('lazy_sync_failed', error=str(e))
             # Continue even if sync fails
         
