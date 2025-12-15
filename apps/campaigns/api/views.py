@@ -11,7 +11,8 @@ from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiPara
 
 from ..domain.models import Campaign
 from ..domain.services import CampaignService
-from ..tasks.campaign_tasks import sync_campaign_with_amazon
+from ..tasks.campaign_tasks import sync_campaign_with_amazon, sync_all_campaign_statuses # Added sync task
+
 from .filters import CampaignFilter
 from .serializers import (
     CampaignCreateSerializer,
@@ -65,6 +66,23 @@ class CampaignViewSet(CorsMixin, viewsets.ModelViewSet):
         elif self.action == 'stats':
             return CampaignStatsSerializer
         return CampaignSerializer
+
+    def list(self, request, *args, **kwargs):
+        """
+        List all campaigns.
+        
+        Trigger synchronous status sync for pending campaigns BEFORE listing.
+        This replaces the need for Celery Beat in low-memory environments.
+        """
+        try:
+            # Sync pending statuses on-demand (Lazy Sync)
+            # In Eager status, this runs synchronously
+            sync_all_campaign_statuses.delay()
+        except Exception as e:
+            logger.error('lazy_sync_failed', error=str(e))
+            # Continue even if sync fails
+        
+        return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         """
