@@ -47,6 +47,10 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+# Deduplicate apps while preserving order
+# This fixes the "Application labels aren't unique" error if an app is added multiple times
+INSTALLED_APPS = list(dict.fromkeys(INSTALLED_APPS))
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # Top priority
