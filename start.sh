@@ -7,13 +7,12 @@ echo "Starting deployment script..."
 echo "Applying migrations..."
 python manage.py migrate --noinput
 
-# Start Celery Worker in background (optional - may fail if no Redis)
-echo "Starting Celery Worker..."
-celery -A config worker -l info &
+# Celery Worker/Beat DISABLED to save memory (Running in Eager mode)
+# echo "Starting Celery Worker..."
+# celery -A config worker -l info &
 
-# Start Celery Beat in background (optional - may fail if no Redis)
-echo "Starting Celery Beat..."
-celery -A config beat -l info &
+# echo "Starting Celery Beat..."
+# celery -A config beat -l info &
 
 # Start Gunicorn (Foreground process to keep container alive)
 echo "Starting Gunicorn..."

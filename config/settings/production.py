@@ -43,6 +43,12 @@ if os.environ.get('SENTRY_DSN'):
 # Production Celery should use Redis
 # CELERY_BROKER_URL should be set in environment
 
+# MEMORY OPTIMIZATION: Run tasks synchronously (Eager) to avoid OOM in small containers
+# This eliminates the need for a separate Worker process
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES = True
+
+
 # Ensure proper logging in production
 LOGGING['handlers']['console']['formatter'] = 'verbose'  # noqa: F405
 
