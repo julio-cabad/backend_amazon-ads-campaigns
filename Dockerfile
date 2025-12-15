@@ -18,10 +18,12 @@ RUN apt-get update \
 COPY requirements/ requirements/
 RUN pip install --no-cache-dir -r requirements/production.txt
 
-# Copy project
+# Copy project (cache bust with build arg)
+ARG CACHEBUST=1
 COPY . .
 
-# Collect static files
+# Collect static files (using production settings)
+ENV DJANGO_SETTINGS_MODULE=config.settings.production
 RUN python manage.py collectstatic --noinput
 
 # Perform chmod on start script
