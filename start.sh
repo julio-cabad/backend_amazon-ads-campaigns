@@ -16,4 +16,4 @@ python manage.py migrate --noinput
 
 # Start Gunicorn (Foreground process to keep container alive)
 echo "Starting Gunicorn..."
-exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2 --threads 4
+exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 1 --threads 4
