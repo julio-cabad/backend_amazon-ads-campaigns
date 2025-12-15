@@ -76,8 +76,15 @@ class CampaignViewSet(CorsMixin, viewsets.ModelViewSet):
         """
         try:
             # Sync pending statuses on-demand (Lazy Sync)
-            # In Eager status, this runs synchronously
+            # 1. Update status for PROCESSING campaigns
             sync_all_campaign_statuses.delay()
+            
+            # 2. Retry initial sync for stuck PENDING campaigns (Self-healing)
+            # This ensures campaigns that missed the initial task get processed
+            pending_campaigns = CampaignService.get_pending_campaigns()
+            for campaign in pending_campaigns:
+                sync_campaign_with_amazon.delay(str(campaign.id))
+                
         except Exception as e:
             logger.error('lazy_sync_failed', error=str(e))
             # Continue even if sync fails

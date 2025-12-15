@@ -50,7 +50,10 @@ CELERY_TASK_EAGER_PROPAGATES = True
 
 
 # Ensure proper logging in production
+LOGGING['handlers']['console']['level'] = 'DEBUG'
 LOGGING['handlers']['console']['formatter'] = 'verbose'  # noqa: F405
+LOGGING['loggers']['apps']['level'] = 'DEBUG'
+LOGGING['loggers']['apps']['handlers'] = ['console']
 
 # CORS is now properly configured in base.py (corsheaders in THIRD_PARTY_APPS)
 
